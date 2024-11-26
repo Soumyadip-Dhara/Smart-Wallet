@@ -11,12 +11,13 @@ let storedLocation = null;
 let gpsTrackingActive = false;
 
 // Initialize Google Map
-const initializeMap = (latitude, longitude) => {
+const initializeMap = (latitude, longitude, accuracy) => {
   const location = { lat: latitude, lng: longitude };
+  
   if (!map) {
     map = new google.maps.Map(mapDiv, {
       center: location,
-      zoom: 15,
+      zoom: 15,  // Adjust zoom for better visibility
     });
     marker = new google.maps.Marker({
       position: location,
@@ -25,6 +26,19 @@ const initializeMap = (latitude, longitude) => {
   } else {
     map.setCenter(location);
     marker.setPosition(location);
+  }
+
+  // Optionally, display an accuracy circle around the location
+  if (accuracy) {
+    const circle = new google.maps.Circle({
+      map: map,
+      radius: accuracy,  // Radius in meters
+      fillColor: "#90EE90",
+      fillOpacity: 0.2,
+      strokeColor: "#90EE90",
+      strokeOpacity: 0.5,
+    });
+    circle.bindTo('center', marker, 'position');
   }
 };
 
@@ -50,14 +64,18 @@ const startGPSTracking = () => {
   if (navigator.geolocation) {
     watchId = navigator.geolocation.watchPosition(
       (position) => {
-        const { latitude, longitude } = position.coords;
+        const { latitude, longitude, accuracy } = position.coords;  // Accuracy added
         storedLocation = { latitude, longitude };
-        initializeMap(latitude, longitude);
+        initializeMap(latitude, longitude, accuracy);  // Pass accuracy for map display
       },
       (error) => {
         errorDiv.textContent = `Unable to retrieve location: ${error.message}`;
       },
-      { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
+      {
+        enableHighAccuracy: true,  // Request high accuracy
+        timeout: 10000,            // Timeout after 10 seconds
+        maximumAge: 0              // No cache
+      }
     );
   } else {
     errorDiv.textContent = "Geolocation is not supported by your browser.";
@@ -100,7 +118,7 @@ connectButton.addEventListener('click', async () => {
       stopGPSTracking();
 
       if (storedLocation) {
-        initializeMap(storedLocation.latitude, storedLocation.longitude);
+        initializeMap(storedLocation.latitude, storedLocation.longitude, 100); // Add a default accuracy if disconnected
       } else {
         errorDiv.textContent = 'Unable to retrieve location where the wallet disconnected.';
       }
