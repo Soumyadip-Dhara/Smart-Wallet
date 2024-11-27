@@ -33,9 +33,9 @@ const initializeMap = (latitude, longitude, accuracy) => {
     const circle = new google.maps.Circle({
       map: map,
       radius: accuracy,  // Radius in meters
-      fillColor: "#90EE90",
+      fillColor: "#cbf5dd",
       fillOpacity: 0.2,
-      strokeColor: "#90EE90",
+      strokeColor: "#cbf5dd",
       strokeOpacity: 0.5,
     });
     circle.bindTo('center', marker, 'position');
