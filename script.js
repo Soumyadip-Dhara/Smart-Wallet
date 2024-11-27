@@ -73,7 +73,7 @@ const stopGPSTracking = () => {
   }
 };
 // Define the audio object for the alarm sound
-const alarmSound = new Audio('mixkit-alarm-clock-beep-988.mp3');
+const alarmSound = new Audio('1stmixkit-alarm-clock-beep-988.mp3');
 
 // Function to play the alarm sound
 const playAlarmSound = () => {
@@ -105,7 +105,7 @@ connectButton.addEventListener('click', async () => {
     device.ongattserverdisconnected = () => {
       statusDiv.style.display = 'none';
       sendNotification('Smart Wallet Bluetooth connection lost!');
-      playAlarmSound();
+      playAlarmSound1();
       alert('Disconnected from Smart Wallet');
 
       // Stop GPS tracking and freeze the last known location when Bluetooth is disconnected
