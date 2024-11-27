@@ -12,6 +12,7 @@ let gpsTrackingActive = false;
 
 // Initialize Google Map
 const initializeMap = (latitude, longitude) => {
+  
   const location = { lat: latitude, lng: longitude };
   if (!map) {
     map = new google.maps.Map(mapDiv, {
@@ -71,6 +72,16 @@ const stopGPSTracking = () => {
     watchId = null;
   }
 };
+// Define the audio object for the alarm sound
+const alarmSound = new Audio('mixkit-alarm-clock-beep-988.mp3');
+
+// Function to play the alarm sound
+const playAlarmSound = () => {
+  alarmSound.currentTime = 0; // Reset the audio to start
+  alarmSound.play().catch((error) => {
+    console.error('Error playing alarm sound:', error);
+  });
+};
 
 // Connect to Smart Wallet using Web Bluetooth API
 connectButton.addEventListener('click', async () => {
@@ -94,6 +105,7 @@ connectButton.addEventListener('click', async () => {
     device.ongattserverdisconnected = () => {
       statusDiv.style.display = 'none';
       sendNotification('Smart Wallet Bluetooth connection lost!');
+      playAlarmSound();
       alert('Disconnected from Smart Wallet');
 
       // Stop GPS tracking and freeze the last known location when Bluetooth is disconnected
