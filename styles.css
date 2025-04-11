@@ -113,3 +113,18 @@ button:hover {
     width: 90%;
   }
 }
+
+#safeModeBtn {
+  padding: 8px 16px;
+  background-color: #f44336;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-left: 10px;
+  transition: background-color 0.3s ease;
+}
+
+#safeModeBtn.active {
+  background-color: #4caf50;
+}

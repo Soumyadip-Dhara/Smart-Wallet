@@ -12,9 +12,9 @@ let storedLocation = null;
 let gpsTrackingActive = false;
 
 // Show Loading Spinner
-// const showLoading = (show) => {
-//   loadingSpinner.style.display = show ? 'block' : 'none';
-// };
+const showLoading = (show) => {
+  loadingSpinner.style.display = show ? 'block' : 'none';
+};
 
 // Initialize Google Map
 const initializeMap = (latitude, longitude, accuracy) => {
@@ -47,9 +47,40 @@ const initializeMap = (latitude, longitude, accuracy) => {
   }
 };
 
+const safeModeBtn = document.getElementById('safeModeBtn');
+let safeMode = false;
+
+safeModeBtn.addEventListener('click', () => {
+  safeMode = !safeMode;
+  safeModeBtn.textContent = `Safe Mode: ${safeMode ? 'ON' : 'OFF'}`;
+  safeModeBtn.classList.toggle('active', safeMode);
+  safeModeBtn.setAttribute('aria-pressed', safeMode);
+  console.log("Safe Mode is now", safeMode ? "ON" : "OFF");
+});
+
+
 // Send Notification
+
 const sendNotification = (message) => {
-  new Notification(message);
+
+  if (safeMode) return;
+
+  if (!("Notification" in window)) {
+    console.error("This browser does not support desktop notification");
+    return;
+  }
+
+  if (Notification.permission === "granted") {
+    new Notification(message);
+  } else if (Notification.permission !== "denied") {
+    Notification.requestPermission().then((permission) => {
+      if (permission === "granted") {
+        new Notification(message);
+      } else {
+        console.warn("Notification permission denied.");
+      }
+    });
+  }
 };
 
 // Start GPS Tracking
@@ -88,6 +119,7 @@ const stopGPSTracking = () => {
 const alarmSound = new Audio('mixkit-facility-alarm-sound-999.mp3');
 
 const playAlarmSound = () => {
+  if (safeMode) return;
   alarmSound.currentTime = 0;
   alarmSound.play().catch((error) => {
     console.error("Error playing alarm sound:", error);
