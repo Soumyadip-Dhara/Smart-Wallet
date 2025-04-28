@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart Wallet Web App</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" href="favicon.ico">
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAJd5aDim5iNwxTVQSuC78NqAAuLcbVQRI" defer></script>
+  
+</head>
+<body>
+  <header>
+    <h1>Smart Wallet Web App</h1>
+  </header>
+
+  <main>
+    <button id="safeModeBtn" aria-pressed="false">Safe Mode: OFF</button>
+    <button id="connect" aria-label="Connect to Smart Wallet">Connect to Smart Wallet</button>
+    <div id="status" class="connected" style="display: none;" role="alert">Connected to Smart Wallet</div>
+    <div id="error" class="error" role="alert"></div>
+    <div id="map" aria-label="Map showing location"></div>
+    <!-- <div id="loading" class="spinner" style="display: none;" aria-live="polite">Loading...</div> -->
+  </main>
+
+  <footer>
+    <p>© 2024 Smart Wallet Inc. | Designed By Soumyadip Dhara, Triniket Maiti, Yeasa Mondal, Sweta Rajak | <a href="#privacy-policy">Privacy Policy</a></p>
+  </footer>
+  <script type="module" src="script.js" defer></script>
+</body>
+</html>
