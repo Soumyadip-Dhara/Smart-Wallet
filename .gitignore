@@ -1,0 +1,30 @@
+# Node.js
+node_modules/
+
+# dotenv files
+.env
+
+# Logs
+*.log
+logs/
+
+# OS specific files
+.DS_Store
+
+# npm debug files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Build directories
+dist/
+build/
+
+# IDE/Editor files
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Environment-specific files
+.env.*
