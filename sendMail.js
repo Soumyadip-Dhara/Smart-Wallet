@@ -1,0 +1,26 @@
+import nodemailer from 'nodemailer';
+import dotenv from "dotenv";
+
+export default async function sendMail(toEmail, subject, text) {
+  let transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+      user: process.env.AUTH_USER,
+      pass: process.env.AUTH_PASS, // NOT your normal password
+    },
+  });
+
+  let mailOptions = {
+    from: process.env.AUTH_USER,
+    to: toEmail,
+    subject: subject,
+    text: text,
+  };
+  await transporter.sendMail(mailOptions);
+  console.log("Email sent successfully!");
+  console.log("Message sent: %s", info.messageId);
+}
+
+// sendMail().catch(console.error);
+
+// module.exports = sendMail;
