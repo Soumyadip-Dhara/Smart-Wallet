@@ -183,6 +183,7 @@ const connectButton = document.getElementById("connect");
 const statusDiv = document.getElementById("status");
 const errorDiv = document.getElementById("error");
 const mapDiv = document.getElementById("map");
+const sendMail = document.getElementById("sendMail");
 
 let device;
 let map;
@@ -193,8 +194,10 @@ let gpsTrackingActive = false;
 
 // Saved Contacts
 let savedContacts = [
-  "sweta.rajak@codeclouds.co.in",
-  "esunny.maiti@gmail.com"
+  "swetarajak1127@gmail.com",
+  "triniket.13@gmail.com",
+  "soumyadipdhara23@gmail.com",
+  "yeasa1223@gmail.com"
 ];
 
 // Initialize Google Map
@@ -321,7 +324,7 @@ connectButton.addEventListener("click", async () => {
 
       setTimeout(() => {
         sendLastLocation();
-      }, 5000);
+      }, 3000);
 
       statusDiv.style.display = "none";
     });
@@ -338,13 +341,17 @@ async function sendLastLocation() {
     return;
   }
 
-  try {
+  
+try {
+  if (safeMode) return;
+   
     const response = await fetch('http://localhost:3000/send-location', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         contacts: savedContacts,
         location: storedLocation
+        // location: {123 : 456}
       }),
     });
 
@@ -356,4 +363,6 @@ async function sendLastLocation() {
   } catch (error) {
     console.error("Error sending location:", error);
   }
+  
+  
 }

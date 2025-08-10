@@ -15,10 +15,14 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.post('/send-location', async (req, res) => {
+  console.log("Mail Sent");
   const { contacts, location } = req.body;
 
   const subject = "Smart Wallet Lost - Last Location!";
-  const message = `Last known location:\nLatitude: ${location.latitude}\nLongitude: ${location.longitude}`;
+  const message = `Last known location:\nLatitude: ${location.latitude}\n
+  Longitude: ${location.longitude}\nYou can find the Disconnection Location through this link:
+   https://www.google.com/maps?q=${location.latitude},${location.longitude}`;
+
 
   try {
     for (const contact of contacts) {
@@ -29,6 +33,7 @@ app.post('/send-location', async (req, res) => {
     console.error('Failed to send emails:', error);
     res.status(500).send('Error sending emails');
   }
+
 });
 
 app.listen(3000, () => {

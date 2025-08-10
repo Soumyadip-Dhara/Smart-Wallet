@@ -5,8 +5,8 @@ export default async function sendMail(toEmail, subject, text) {
   let transporter = nodemailer.createTransport({
     service: "gmail",
     auth: {
-      user: process.env.AUTH_USER,
-      pass: process.env.AUTH_PASS, // NOT your normal password
+      user: "swetarajak001@gmail.com",
+      pass: "fyiu dgpg zdps tbru", // NOT your normal password
     },
   });
 
@@ -16,7 +16,7 @@ export default async function sendMail(toEmail, subject, text) {
     subject: subject,
     text: text,
   };
-  await transporter.sendMail(mailOptions);
+  let info = await transporter.sendMail(mailOptions);
   console.log("Email sent successfully!");
   console.log("Message sent: %s", info.messageId);
 }
